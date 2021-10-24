@@ -3,6 +3,13 @@
 
 This repository describes two frameworks which can be used for pre-Silicon power side-channel analysis of digital circuit designs (i.e., at the RTL or gate-level netlist stage): **PLAN** (Power attack Leakage ANalyzer) and **FORTIFY**.
 
+## Publications
+
+- Muhammad Arsath K. F, Vinod Ganesan, Rahul Bodduna, Chester Rebeiro:
+_PARAM: A Microprocessor Hardened for Power Side-Channel Attack Resistance._ [HOST 2020: 23-34](https://doi.org/10.1109/HOST45689.2020.9300263)
+- A V Lakshmy, Chester Rebeiro, and Swarup Bhunia:
+_FORTIFY: Analytical Pre-Silicon Side-Channel Leakage Characterization of Digital Designs._ ASP-DAC 2022
+
 ## Setup
 
 - Download and install Anaconda. Please refer to https://docs.anaconda.com/anaconda/install/linux/ (steps 1 – 10 under the section _Installation_).
