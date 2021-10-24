@@ -26,6 +26,8 @@ This repository describes two frameworks which can be used for pre-Silicon power
 
   `source activate psca`
 
+The above steps need to be performed once initially. However, the last step has to be run, i.e., the environment must be activated each time before running any of the tools.
+
 ## Documentation
 
 Please refer to the `docs/` folder in this repo to understand the directory structure of the repo, as well as for a detailed description of both the tools and how to run their corresponding scripts.
