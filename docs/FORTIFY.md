@@ -40,7 +40,7 @@ The `run_fortify.py` script takes the following input parameters:
 - `<design>` : name of the design being evaluated (could be any name of user's choice)
 - [optional] `-r <results_path>` : name of the folder in the `results/` directory to store the corresponding results (default value: a folder named with the current timestamp)
 
-For example, let's take the case of a 2-bit Full Adder design [(RTL Verilog file)](../verilog_files/fa2.v). The design has the top module `FullAdder`. Consider that the encrypted input `FullAdder.enca` (with a width of 2 bits) is the reference signal. Then, the corresponding module name is `FullAdder`, and the instance name is also `FullAdder` (since this is the top module itself). Let us say the name of the design is `fa2`. Then, the corresponding command to run FORTIFY would be:
+For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`). The design has the top module `FullAdder`. Consider that the encrypted input `FullAdder.enca` (with a width of 2 bits) is the reference signal. Then, the corresponding module name is `FullAdder`, and the instance name is also `FullAdder` (since this is the top module itself). Let us say the name of the design is `fa2`. Then, the corresponding command to run FORTIFY would be:
 
 `python3 run_fortify.py ../verilog_files/fa2.v FullAdder FullAdder FullAdder FullAdder.enca 2 fa2 -r trial`
 
