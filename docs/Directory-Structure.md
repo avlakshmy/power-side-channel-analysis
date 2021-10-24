@@ -22,7 +22,7 @@
   - `results/` : Directory to store results of each design analyzed using PLAN
   - `vcd/` : Directory to store the VCD files generated during simulation
   - `clean.sh` : Bash script to clean up temporary files generated during previous simulations
-  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the [Verilog file](../verilog_files/fa2.v) corresponding to `fa2` design
+  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to `fa2` design
   - `run_plan.py` : Main script to run PLAN
 - `verilog_files/` : Directory to store Verilog files corresponding to designs to be analysed using the tools
   - `fa2.v` : Sample Verilog file corresponding to 2-bit full adder design

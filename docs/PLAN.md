@@ -11,7 +11,10 @@ _PARAM: A Microprocessor Hardened for Power Side-Channel Attack Resistance._ [HO
 - A Verilog file of the digital circuit design to be analyzed, at the RTL or gate-level netlist stage
 - An oracle signal in this design, with respect to which the leakage scores are to be computed
 
-**Output:** A file containing the power side-channel leakage scores of each signal in the design (computed with respect to the oracle signal)
+**Outputs:**
+
+- A file (`leaks.txt`) containing the power side-channel leakage scores of each signal in the design (computed with respect to the oracle signal)
+- A file (`time.txt`) containing the total number of signals in the design and the total time taken by PLAN for the analysis
 
 **Code:**
 
@@ -27,7 +30,7 @@ The `plan/` directory contains the code and results for the PLAN framework. The 
   - Further, each signal in the design is processed by computing the pairwise Hamming distances between the values of that signal across the simulation runs.
   - Finally, the signal-wise leakage scores are computed with respect to the oracle signal, based on the Pearson's correlation score, and written to an output file.
 - **Please note:** Depending on the input Verilog design being analyzed,
-  - we must create a Bash script for performing behavioral simulations (the script would be different for each input design, because the number of inputs, their names and range of values taken by them would be different in each case; please refer to [`fa2_simulate.sh`](fa2_simulate.sh) corresponding to the 20bit Full Adder design [`../verilog_files/fa2.v`](../verilog_files/fa2.v) for reference)
+  - we must create a Bash script for performing behavioral simulations (the script would be different for each input design, because the number of inputs, their names and range of values taken by them would be different in each case; please refer to `fa2_simulate.sh` corresponding to the 2-bit Full Adder design (`../verilog_files/fa2.v`) for reference)
   - the first few lines of the `run_plan.py` script, containing the functions to load input data and compute the oracle, must be modified
 
 **Steps to run PLAN:**
@@ -42,6 +45,6 @@ The `run_plan.py` script takes the following input parameters:
 - [optional] `-n <num_iterations>` : number of iterations to perform during behavioral simulation (default value: 1000)
 - [optional] `-r <results_path>` : name of the folder in the `results/` directory to store the corresponding results (default value: a folder named with the current timestamp)
 
-For example, let's take the case of a 2-bit Full Adder design [(RTL Verilog file)](../verilog_files/fa2.v). Let us say the name of the design is `fa2`. Then, the corresponding command to run PLAN would be:
+For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`). Let us say the name of the design is `fa2`. Then, the corresponding command to run PLAN would be:
 
 `python3 run_plan.py 2 fa2_simulate.sh fa2 -n 1000 -r trial`

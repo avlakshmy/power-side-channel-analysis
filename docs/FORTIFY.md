@@ -63,6 +63,6 @@ The results include:
 - `compare.png` : A visual comparison of the leakage scores of PLAN and FORTIFY (for the common signals)
 - `err.png` : A graph of the error/difference between the leakage scores of PLAN and FORTIFY (for the common signals)
 
-For example, for the above case of the [2-bit Full Adder](../verilog_files/fa2.v), we have the [FORTIFY leakage scores](results/trial/fa2/leaks.txt). Suppose we have also computed the corresponding [PLAN leakage scores](../plan/results/trial/fa2/leaks.txt). Let us say we want to store the PLAN v/s FORTIFY comparison results in `results/fa2/trial/`. Then, the corresponding command would be:
+For example, for the above case of the 2-bit Full Adder (`../verilog_files/fa2.v`), suppose we have the FORTIFY leakage scores (`results/trial/fa2/leaks.txt`) as well as the PLAN leakage scores (`../plan/results/trial/fa2/leaks.txt`). Let us say we want to store the PLAN v/s FORTIFY comparison results in `results/fa2/trial/`. Then, the corresponding command would be:
 
 `python3 compare_fortify_with_plan.py fa2 ../plan/results/fa2/leaks.txt results/trial/fa2/leaks.txt -r trial`
