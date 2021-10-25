@@ -43,7 +43,7 @@ The `run_plan.py` script takes the following input parameters:
 - `<simulation_script>` : path to the script used to perform behavioral simulation
 - `<design>` : name of the design being evaluated (could be any name of user's choice)
 - [optional] `-n <num_iterations>` : number of iterations to perform during behavioral simulation (default value: 1000)
-- [optional] `-r <results_path>` : name of the directory in the `results/` directory to store the corresponding results (default value: the current timestamp)
+- [optional] `-r <results_path>` : name of the directory in the `results/` directory (will be automatically created when the script is run) to store the corresponding results (default value: the current timestamp)
 
 For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`), which uses a secret key `FullAdder.k` of value 2. Suppose we use the `FullAdder.enca` signal in this design to be our oracle signal. Let us say the name of the design is `fa2`. We have the script `fa2_simulate.sh` to perform the behavioral simulations on this design. Also, we have added the required functions at the beginning of the `run_plan.py` script to load the input values and compute the oracle. Suppose we want to store the results in a directory called `trial/` within the `results/` directory. Then, the corresponding command to run PLAN would be:
 

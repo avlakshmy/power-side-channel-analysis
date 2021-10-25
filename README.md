@@ -43,7 +43,6 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
 ## Directory Structure of Repo
 
 - `fortify/` : Code and results for FORTIFY
-  - `results/` : Directory to store results of each design analyzed using FORTIFY
   - `std_cell_lib/` : Verilog standard gate and module definitions
     - `std_gates.v` : Verilog standard gate definitions (required for parsing by FORTIFY)
     - `std_mods.v` : Verilog standard module definitions from Synopsys Design Compiler (SDC)
@@ -55,14 +54,10 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `sig_prob.py` : Python script containing functions to recursively calculate the signal probability and conditional signal probabilities of a signal in the design
   - `utils.py` : Python script containing utility functions used during Verilog parsing
 - `plan/` : Code files for PLAN
-  - `modules/` : Directory to store pairwise Hamming distances for each signal during the PLAN analysis
-  - `pkl/` : Directory to store the pkl files corresponding to VCD files during PLAN analysis
-  - `results/` : Directory to store results of each design analyzed using PLAN
-  - `vcd/` : Directory to store the VCD files generated during simulation
   - `clean.sh` : Bash script to clean up temporary files generated during previous simulations
   - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to `fa2` design
   - `run_plan.py` : Main script to run PLAN
-- `verilog_files/` : Directory to store Verilog files corresponding to designs to be analysed using the tools
+- `verilog_files/` : Directory to store Verilog files corresponding to designs to be analyzed using the tools
   - `fa2.v` : Sample Verilog file corresponding to 2-bit full adder design
 - `environment.yml` : Conda environment file
 - `LICENSE.iitm` : License for the tools

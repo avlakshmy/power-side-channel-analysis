@@ -53,7 +53,7 @@ We also have a script, `compare_fortify_with_plan.py` which compares the leakage
 - `<design>` : name of the design being evaluated
 - `<plan_leaks_path>`: path to the file containing the PLAN leakage scores for the given design
 - `<fortify_leaks_path>`: path to the file containing the FORTIFY results for the given design
-- [optional] `-r <results_path>`: name of the directory in the `results/` directory to store the corresponding results (default value: the current timestamp)
+- [optional] `-r <results_path>`: name of the directory in the `results/` directory (will be automatically created when the script is run) to store the corresponding results (default value: the current timestamp)
 
 The results include:
 
