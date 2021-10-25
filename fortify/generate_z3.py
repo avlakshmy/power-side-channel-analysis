@@ -558,7 +558,7 @@ def generateModuleMaps(moduleAst, moduleInputPortListMap, moduleOutputPortListMa
             for instAst in ast.instances:
                 updateAssignGraphWithInstAst(assignGraph, instAst, moduleInputPortListMap, moduleOutputPortListMap)
 
-    # do top sort on graph and construct final expr
+    # do topological sort on graph
     topSortNodes = assignGraph.topSort()
 
     return nameExprMap, nameWidthMap, topSortNodes

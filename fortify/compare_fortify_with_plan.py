@@ -66,7 +66,7 @@ def main(plan_leaks_path, fortify_leaks_path, results_path):
     print('Spearman\'s correlation: %.3f' % spearman_corr)
     print('*******************************')
     print()
-    print('Please check the', results_path, 'folder for visual comparison and error graphs.')
+    print('Please check the', results_path, 'directory for visual comparison and error graphs.')
 
 if __name__ == '__main__':
     # creating the argument parser
@@ -89,7 +89,7 @@ if __name__ == '__main__':
                            '--results-path',
                            type=str,
                            action='store',
-                           help='name of folder within results/ directory to store results, default value = current timestamp')
+                           help='name of directory within results/ directory to store results, default value = current timestamp')
 
     # parsing the arguments
     args = my_parser.parse_args()

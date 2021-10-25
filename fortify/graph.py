@@ -41,7 +41,7 @@ class Graph:
 				return node
 		return None
 
-	def topSort(self):
+	def topSort(self): # topological sort
 		top_sort = []
 
 		start_nodes = [val for (key, val) in self.idNodeMap.items() if len(val.incomingEdgeAstMapCopy) == 0]

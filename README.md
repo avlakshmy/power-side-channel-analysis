@@ -23,8 +23,11 @@ _FORTIFY: Analytical Pre-Silicon Side-Channel Leakage Characterization of Digita
   `conda --version`
 
   `conda update conda`
-- Download the `environment.yml` file from this repo.
-- Create the environment (named `psca`) using the above file by running the following command:
+- Clone this repo on your local system:
+
+  `git clone https://github.com/avlakshmy/power-side-channel-analysis.git`
+
+- Create the environment (named `psca`) using the `environment.yml` file in the root of the repo, by running the following command:
 
   `conda env create -f environment.yml`
 
@@ -35,9 +38,35 @@ _FORTIFY: Analytical Pre-Silicon Side-Channel Leakage Characterization of Digita
 
 The above steps need to be performed once initially. However, the last step has to be run, i.e., the environment must be activated each time before running any of the tools.
 
-## Documentation
+Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more detailed description of PLAN and FORTIFY, as well as instructions to run the scripts for both tools.
 
-Please refer to the `docs/` folder in this repo to understand the directory structure of the repo, as well as for a detailed description of both the tools and how to run their corresponding scripts.
+## Directory Structure of Repo
+
+- `fortify/` : Code and results for FORTIFY
+  - `results/` : Directory to store results of each design analyzed using FORTIFY
+  - `std_cell_lib/` : Verilog standard gate and module definitions
+    - `std_gates.v` : Verilog standard gate definitions (required for parsing by FORTIFY)
+    - `std_mods.v` : Verilog standard module definitions from Synopsys Design Compiler (SDC)
+  - `compare_fortify_with_plan.py` : Script that compares the results of FORTIFY with those of PLAN
+  - `generate_z3.py` : Python script containing functions for generating logical expressions corresponding to each signal in the design
+  - `graph.py` : Python script defining a graph class
+  - `module_maps.py` : Python script containing functions to convert the input design into a directed graph representation and extract the sub-circuit influenced by the reference signal
+  - `run_fortify.py` : Main script to run FORTIFY
+  - `sig_prob.py` : Python script containing functions to recursively calculate the signal probability and conditional signal probabilities of a signal in the design
+  - `utils.py` : Python script containing utility functions used during Verilog parsing
+- `plan/` : Code files for PLAN
+  - `modules/` : Directory to store pairwise Hamming distances for each signal during the PLAN analysis
+  - `pkl/` : Directory to store the pkl files corresponding to VCD files during PLAN analysis
+  - `results/` : Directory to store results of each design analyzed using PLAN
+  - `vcd/` : Directory to store the VCD files generated during simulation
+  - `clean.sh` : Bash script to clean up temporary files generated during previous simulations
+  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to `fa2` design
+  - `run_plan.py` : Main script to run PLAN
+- `verilog_files/` : Directory to store Verilog files corresponding to designs to be analysed using the tools
+  - `fa2.v` : Sample Verilog file corresponding to 2-bit full adder design
+- `environment.yml` : Conda environment file
+- `LICENSE.iitm` : License for the tools
+- `README.md` : High-level overview of the tools
 
 ## Contact
 

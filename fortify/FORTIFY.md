@@ -18,7 +18,7 @@ _FORTIFY: Analytical Pre-Silicon Side-Channel Leakage Characterization of Digita
 
 **Code:**
 
-The `fortify/` directory contains the code and results for the FORTIFY framework. The main script for FORTIFY is `run_fortify.py`. It performs the following steps:
+The main script for FORTIFY is `run_fortify.py`. It performs the following steps:
 
 - **Directed graph representation:**  The Verilog input circuit design is parsed and converted into its directed graph representation, where the nodes represent the gates in the circuit and the edges represent the connections between the gates. (`graph.py`, `generate_z3.py`)
 - **Sub-circuit extraction:** Static information flow analysis is carried out on the directed graph representation, to extract the sub-circuit of the design which is influenced by the reference signal. (`module_maps.py`)
@@ -38,9 +38,9 @@ The `run_fortify.py` script takes the following input parameters:
 - `<ref_sig_name>` : name of the reference signal
 - `<ref_sig_width>` : width of the reference signal
 - `<design>` : name of the design being evaluated (could be any name of user's choice)
-- [optional] `-r <results_path>` : name of the folder in the `results/` directory to store the corresponding results (default value: a folder named with the current timestamp)
+- [optional] `-r <results_path>` : name of the directory in the `results/` directory to store the corresponding results (default value: the current timestamp)
 
-For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`). The design has the top module `FullAdder`. Consider that the encrypted input `FullAdder.enca` (with a width of 2 bits) is the reference signal. Then, the corresponding module name is `FullAdder`, and the instance name is also `FullAdder` (since this is the top module itself). Let us say the name of the design is `fa2`. Then, the corresponding command to run FORTIFY would be:
+For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`). The design has the top module `FullAdder`. Consider that the encrypted input `FullAdder.enca` (with a width of 2 bits) is the reference signal, which is in the `FullAdder` module. Then, the reference module name is `FullAdder`, and the reference instance name is also `FullAdder` (since this is the top module itself). Let us say the name of the design is `fa2`. Then, the corresponding command to run FORTIFY would be:
 
 `python3 run_fortify.py ../verilog_files/fa2.v FullAdder FullAdder FullAdder FullAdder.enca 2 fa2 -r trial`
 
@@ -53,7 +53,7 @@ We also have a script, `compare_fortify_with_plan.py` which compares the leakage
 - `<design>` : name of the design being evaluated
 - `<plan_leaks_path>`: path to the file containing the PLAN leakage scores for the given design
 - `<fortify_leaks_path>`: path to the file containing the FORTIFY results for the given design
-- [optional] `-r <results_path>`: name of the folder in the `results/` directory to store the corresponding results (default value: a folder named with the current timestamp)
+- [optional] `-r <results_path>`: name of the directory in the `results/` directory to store the corresponding results (default value: the current timestamp)
 
 The results include:
 
@@ -63,6 +63,6 @@ The results include:
 - `compare.png` : A visual comparison of the leakage scores of PLAN and FORTIFY (for the common signals)
 - `err.png` : A graph of the error/difference between the leakage scores of PLAN and FORTIFY (for the common signals)
 
-For example, for the above case of the 2-bit Full Adder (`../verilog_files/fa2.v`), suppose we have the FORTIFY leakage scores (`results/trial/fa2/leaks.txt`) as well as the PLAN leakage scores (`../plan/results/trial/fa2/leaks.txt`). Let us say we want to store the PLAN v/s FORTIFY comparison results in `results/fa2/trial/`. Then, the corresponding command would be:
+For example, for the above case of the 2-bit Full Adder (`../verilog_files/fa2.v`), suppose we have the FORTIFY leakage scores (`results/trial/fa2/leaks.txt`) as well as the PLAN leakage scores (`../plan/results/trial/fa2/leaks.txt`). Let us say we want to store the PLAN v/s FORTIFY comparison results in a directory called `trial/` within the `results/` directory. Then, the corresponding command would be:
 
-`python3 compare_fortify_with_plan.py fa2 ../plan/results/fa2/leaks.txt results/trial/fa2/leaks.txt -r trial`
+`python3 compare_fortify_with_plan.py fa2 ../plan/results/trial/fa2/leaks.txt results/trial/fa2/leaks.txt -r trial`

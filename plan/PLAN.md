@@ -18,7 +18,7 @@ _PARAM: A Microprocessor Hardened for Power Side-Channel Attack Resistance._ [HO
 
 **Code:**
 
-The `plan/` directory contains the code and results for the PLAN framework. The main script which performs the entire simulation and analysis of PLAN is `run_plan.py`:
+The main script for PLAN is `run_plan.py`:
 
 - The script first performs behavioral simulations on the input Verilog file, by invoking a Bash script, which in turn carries out the following steps for a large enough no. of iterations (typically 1000):
   - generates random values for each of the inputs (except the secret key - which remains constant) in the input design
@@ -43,8 +43,8 @@ The `run_plan.py` script takes the following input parameters:
 - `<simulation_script>` : path to the script used to perform behavioral simulation
 - `<design>` : name of the design being evaluated (could be any name of user's choice)
 - [optional] `-n <num_iterations>` : number of iterations to perform during behavioral simulation (default value: 1000)
-- [optional] `-r <results_path>` : name of the folder in the `results/` directory to store the corresponding results (default value: a folder named with the current timestamp)
+- [optional] `-r <results_path>` : name of the directory in the `results/` directory to store the corresponding results (default value: the current timestamp)
 
-For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`). Let us say the name of the design is `fa2`. Then, the corresponding command to run PLAN would be:
+For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`), which uses a secret key `FullAdder.k` of value 2. Suppose we use the `FullAdder.enca` signal in this design to be our oracle signal. Let us say the name of the design is `fa2`. We have the script `fa2_simulate.sh` to perform the behavioral simulations on this design. Also, we have added the required functions at the beginning of the `run_plan.py` script to load the input values and compute the oracle. Suppose we want to store the results in a directory called `trial/` within the `results/` directory. Then, the corresponding command to run PLAN would be:
 
 `python3 run_plan.py 2 fa2_simulate.sh fa2 -n 1000 -r trial`

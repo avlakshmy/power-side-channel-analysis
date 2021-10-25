@@ -155,7 +155,7 @@ if __name__ == '__main__':
                            '--results-path',
                            type=str,
                            action='store',
-                           help='name of folder within results/ directory to store results, default value = current timestamp')
+                           help='name of directory within results/ directory to store results, default value = current timestamp')
 
     # parsing the arguments
     args = my_parser.parse_args()
