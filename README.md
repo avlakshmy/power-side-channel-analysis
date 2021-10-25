@@ -46,6 +46,7 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `std_cell_lib/` : Verilog standard gate and module definitions
     - `std_gates.v` : Verilog standard gate definitions (required for parsing by FORTIFY)
     - `std_mods.v` : Verilog standard module definitions from Synopsys Design Compiler (SDC)
+  - `FORTIFY.md` : Documentation about FORTIFY
   - `compare_fortify_with_plan.py` : Script that compares the results of FORTIFY with those of PLAN
   - `generate_z3.py` : Python script containing functions for generating logical expressions corresponding to each signal in the design
   - `graph.py` : Python script defining a graph class
@@ -54,6 +55,7 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `sig_prob.py` : Python script containing functions to recursively calculate the signal probability and conditional signal probabilities of a signal in the design
   - `utils.py` : Python script containing utility functions used during Verilog parsing
 - `plan/` : Code files for PLAN
+  - `PLAN.md` : Documentation about PLAN
   - `clean.sh` : Bash script to clean up temporary files generated during previous simulations
   - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to `fa2` design
   - `run_plan.py` : Main script to run PLAN
