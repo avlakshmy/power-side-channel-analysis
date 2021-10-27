@@ -35,10 +35,11 @@ The main script for PLAN is `run_plan.py`:
 
 **Steps to run PLAN:**
 
-The first step is to choose the input Verilog design to be analyzed, as well as the signal to be used as the oracle in the chosen design. Correspondingly, we need to create a Bash script for performing the behavioral simulation, where we must specify the correct input Verilog file name, and also ensure that it has the correct line numbers, variable names, max range (depending on the number of bits in each input) to generate random values. We must also modify the first few lines of the `run_plan.py` script containing functions for loading the input values and computing the oracle. Then, we can run this script.
+The first step is to choose the input Verilog design to be analyzed, as well as the signal to be used as the oracle in the chosen design. Correspondingly, we need to create a Bash script for performing the behavioral simulation, where we must specify the correct input Verilog file name, and also ensure that it has the correct line numbers, variable names, max range (depending on the number of bits in each input) to generate random values. We must also modify the first few lines of the `run_plan.py` script containing functions for loading the input values and computing the oracle. The corresponding functions for the sample Verilog files have been provided in the `examples.py` file. Then, we can run this script.
 
 The `run_plan.py` script takes the following input parameters:
 
+- `<input_file_path>` : path to the input Verilog file to be analyzed
 - `<key_value>` : the value of the secret key used in the input Verilog file
 - `<simulation_script>` : path to the script used to perform behavioral simulation
 - `<design>` : name of the design being evaluated (could be any name of user's choice)
@@ -47,4 +48,4 @@ The `run_plan.py` script takes the following input parameters:
 
 For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`), which uses a secret key `FullAdder.k` of value 2. Suppose we use the `FullAdder.enca` signal in this design to be our oracle signal. Let us say the name of the design is `fa2`. We have the script `fa2_simulate.sh` to perform the behavioral simulations on this design. Also, we have added the required functions at the beginning of the `run_plan.py` script to load the input values and compute the oracle. Suppose we want to store the results in a directory called `trial/` within the `results/` directory. Then, the corresponding command to run PLAN would be:
 
-`python3 run_plan.py 2 fa2_simulate.sh fa2 -n 1000 -r trial`
+`python3 run_plan.py ../verilog_files/fa2.v 2 fa2_simulate.sh fa2 -n 1000 -r trial`

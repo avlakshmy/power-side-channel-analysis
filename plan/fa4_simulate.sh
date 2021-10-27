@@ -7,12 +7,12 @@ inpfile=$1
 runs=$2
 
 # line numbers corresponding to initialisation of the input variables
-line1=46 #a
-line2=47 #b
-line3=48 #c
+line1=48 #a
+line2=49 #b
+line3=50 #c
 
 # line number corresponding to the dumpfile command
-lineD=49 #dumpfile
+lineD=51 #dumpfile
 
 # script to clean up temporary files created from previous simulation
 ./clean.sh
@@ -21,8 +21,8 @@ for ((i=1;i<=$runs;i++));
 do
 	# generating random values for each of the input variables
 	# the maximum value possible for each variable must be updated below
-	r1=$((RANDOM%4))
-	r2=$((RANDOM%4))
+	r1=$((RANDOM%16))
+	r2=$((RANDOM%16))
 	r3=$((RANDOM%2))
 
 	# plugging in the above random values in the Verilog file

@@ -18,7 +18,8 @@ from tqdm import tqdm
 from Verilog_VCD import Verilog_VCD as v
 
 ################################################################################
-# Functions to be modified by user as per the design being analysed
+# Functions to be modified by user as per the design being analysed.
+# Please refer to examples.py for the corresponding functions for other designs.
 ################################################################################
 
 # To read the input values generated during simulation
@@ -197,11 +198,11 @@ def computeAndSaveLeakageScores(leaks_file_path, num_iterations, key_value):
 
     return len(sorted_sigwise)
 
-def main(simulation_script, num_iterations, key_value, leaks_file_path, time_file_path):
+def main(input_file_path, simulation_script, num_iterations, key_value, leaks_file_path, time_file_path):
     start_time = time.time()
 
     # simulation
-    subprocess.run(['./' + simulation_script, str(num_iterations)])
+    subprocess.run(['./' + simulation_script, input_file_path, str(num_iterations)])
 
     # analysis
     nc2 = ((num_iterations * (num_iterations - 1)) / 2)
@@ -244,6 +245,10 @@ if __name__ == '__main__':
     my_parser = argparse.ArgumentParser(description='Pre-silicon power side-channel analysis using PLAN')
 
     # adding the arguments
+    my_parser.add_argument('InputFilePath',
+                           metavar='input_file_path',
+                           type=str,
+                           help='path to the input Verilog file to be analyzed')
     my_parser.add_argument('KeyValue',
                            metavar='key_value',
                            type=int,
@@ -270,6 +275,7 @@ if __name__ == '__main__':
     # parsing the arguments
     args = my_parser.parse_args()
 
+    input_file_path = args.InputFilePath
     key_value = args.KeyValue
     simulation_script = args.SimulationScript
     design = args.Design
@@ -300,13 +306,12 @@ if __name__ == '__main__':
         os.makedirs('modules/')
 
     print("Note: Please check that:")
-    print("1. the simulation script ({}) given as argument:".format(simulation_script))
-    print("\ta) has the correct input Verilog file name")
-    print("\tb) has the correct line numbers, variable names, max range to generate random values")
-    print("2. this script (run_plan.py) has the correct functions to load data and compute oracle (in the first few lines)")
+    print("1. the simulation script ({}) given as argument has the correct line numbers, variable names, max range to generate random values".format(simulation_script))
+    print("2. the secret key ({}) given as argument is same as that in the input Verilog file ({}) - refer to examples.py for guidance".format(key_value, input_file_path))
+    print("3. this script (run_plan.py) has the correct functions to load data and compute oracle (in the first few lines) - refer to examples.py for guidance")
     print()
     print("If you are sure that the above details are correct, and wish to continue, press Y/y (and enter)")
     print("To stop, press any other key (and enter)")
     user_input = input()
     if user_input == 'y' or user_input == 'Y':
-        main(simulation_script, num_iterations, key_value, leaks_file_path, time_file_path)
+        main(input_file_path, simulation_script, num_iterations, key_value, leaks_file_path, time_file_path)

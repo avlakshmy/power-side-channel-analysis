@@ -46,8 +46,8 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `std_cell_lib/` : Verilog standard gate and module definitions
     - `std_gates.v` : Verilog standard gate definitions (required for parsing by FORTIFY)
     - `std_mods.v` : Verilog standard module definitions from Synopsys Design Compiler (SDC)
-  - `FORTIFY.md` : Documentation about FORTIFY
   - `compare_fortify_with_plan.py` : Script that compares the results of FORTIFY with those of PLAN
+  - `FORTIFY.md` : Documentation about FORTIFY
   - `generate_z3.py` : Python script containing functions for generating logical expressions corresponding to each signal in the design
   - `graph.py` : Python script defining a graph class
   - `module_maps.py` : Python script containing functions to convert the input design into a directed graph representation and extract the sub-circuit influenced by the reference signal
@@ -55,12 +55,21 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `sig_prob.py` : Python script containing functions to recursively calculate the signal probability and conditional signal probabilities of a signal in the design
   - `utils.py` : Python script containing utility functions used during Verilog parsing
 - `plan/` : Code files for PLAN
-  - `PLAN.md` : Documentation about PLAN
+  - `c17_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/c17.v`) corresponding to `c17` design
+  - `c432_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/c432.v`) corresponding to `c432` design
   - `clean.sh` : Bash script to clean up temporary files generated during previous simulations
-  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to `fa2` design
+  - `examples.py` : File containing the secret key values, as well as load input and compute oracle functions for different designs
+  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to 2-bit Full Adder (`fa2`) design
+  - `fa4_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa4.v`) corresponding to 4-bit Full Adder (`fa4`) design
+  - `fa8_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa8.v`) corresponding to 8-bit Full Adder (`fa8`) design
+  - `PLAN.md` : Documentation about PLAN
   - `run_plan.py` : Main script to run PLAN
 - `verilog_files/` : Directory to store Verilog files corresponding to designs to be analyzed using the tools
+  - `c17.v` : Sample Verilog file corresponding to c17 combinational circuit design
+  - `c432.v` : Sample Verilog file corresponding to c432 combinational circuit design
   - `fa2.v` : Sample Verilog file corresponding to 2-bit full adder design
+  - `fa4.v` : Sample Verilog file corresponding to 4-bit full adder design
+  - `fa8.v` : Sample Verilog file corresponding to 8-bit full adder design
 - `environment.yml` : Conda environment file
 - `LICENSE.iitm` : License for the tools
 - `README.md` : High-level overview of the tools
