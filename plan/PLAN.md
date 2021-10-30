@@ -20,7 +20,7 @@ _PARAM: A Microprocessor Hardened for Power Side-Channel Attack Resistance._ [HO
 
 The main script for PLAN is `run_plan.py`:
 
-- The script first performs behavioral simulations on the input Verilog file, by invoking a Bash script, which in turn carries out the following steps for a large enough no. of iterations (typically 1000):
+- The script first performs a large number of (typically 1000) behavioral simulations on the input Verilog file, by invoking a Bash script, which in turn carries out the following steps:
   - generates random values for each of the inputs (except the secret key - which remains constant) in the input design
   - performs the Verilog behavioral simulation
   - produces the corresponding VCD (Value Change Dump) file

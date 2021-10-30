@@ -20,10 +20,17 @@ _FORTIFY: Analytical Pre-Silicon Side-Channel Leakage Characterization of Digita
 
 The main script for FORTIFY is `run_fortify.py`. It performs the following steps:
 
-- **Directed graph representation:**  The Verilog input circuit design is parsed and converted into its directed graph representation, where the nodes represent the gates in the circuit and the edges represent the connections between the gates. (`graph.py`, `generate_z3.py`)
-- **Sub-circuit extraction:** Static information flow analysis is carried out on the directed graph representation, to extract the sub-circuit of the design which is influenced by the reference signal. (`module_maps.py`)
-- **Signal probability calculation:** This step recursively calculates the approximate signal probabilities as well as conditional signal probabilities (w.r.t the reference signal) of the output signal of each gate in the design. (`sig_prob.py`)
-- **Leakage score evaluation:** Finally, the leakage score for each signal in the design is calculated based on a mathematical model involving the signal probability and conditional signal probability values.
+- **Directed graph representation:**  The Verilog input circuit design is parsed and converted into its directed graph representation, where the nodes represent the gates in the circuit and the edges represent the connections between the gates. The edges are labelled with the corresponding logical expression of the signal in terms of its inputs. For example, the output of an `OR` gate with input signals `a`, `b` is labelled with the expression `[OR, a, b]`, where `a` and `b` may each be outputs of other gates (with corresponding labels/expressions). In this way, all the signals are mapped to their corresponding logical expressions.
+- **Sub-circuit extraction:** Static information flow analysis is carried out on the directed graph representation, to extract the sub-circuit of the design which is influenced by the reference signal. This is done in two steps, starting with the reference signal bits.
+
+  - First, we trace these bits forward in the graph to identify which gates/instances they drive.
+  - Second, we collect what are the other inputs into these identified gates/instances by a backward trace, and add them to the list of our signals of interest. We also add all the internal signals of the identified gates/instances to our list of signals of interest.
+
+  In this way, we repeat the above steps for the outputs of the gates/instances identified in the first step, until we reach the outputs of the design.
+- **Signal probability calculation:** This step recursively calculates the approximate signal probabilities as well as conditional signal probabilities (w.r.t the reference signal) of the output signal of each gate in the sub-circuit extracted above. These recursive formulae are based on the truth table of each logic gate. For example, the signal probability `SP(b)` of a signal `b` with expression `[NOT, a]` is `SP(b) = 1 - S(a)`. Similarly, we have formulae for the other logic gates as well.
+- **Leakage score evaluation:** Finally, we calculate the leakage score for each signal in the extracted sub-circuit based on a mathematical model involving the signal probability and conditional signal probability values.
+
+The code for the first two steps is present in the scripts `graph.py`, `generate_z3.py` and `module_maps.py`. The script `sig_prob.py` contains the functions used for signal probability calculation. The leakage score calculation is carried out in the `run_fortify.py` script.
 
 The scripts `graph.py`, `generate_z3.py`, `module_maps.py` have been reused (with modifications) from the [SOLOMON project](https://ieeexplore.ieee.org/abstract/document/9116380/).
 
@@ -48,7 +55,7 @@ For example, let's take the case of a 2-bit Full Adder design (`../verilog_files
 
 **Input parameter values for different sample Verilog files**
 
-| Input File | Top Module | Ref Module | Ref Instance | Ref Signal | Ref Signal Width |
+| Input File | Top Module | Reference Module | Reference Instance | Reference Signal | Reference Signal Width |
 | :- | :- | :- | :- | :- | :- |
 | `c17.v` | `c17` | `c17` | `c17` | `c17.N2` | 1 |
 | `c432.v` | `c432` | `c432` | `c432` | `c432.N1` | 1 |
@@ -63,7 +70,7 @@ For example, let's take the case of a 2-bit Full Adder design (`../verilog_files
 
 **Steps to compare results of FORTIFY and PLAN**
 
-We also have a script, `compare_fortify_with_plan.py` which compares the leakage score results of FORTIFY with those of PLAN. It takes the following arguments as input:
+The script `compare_fortify_with_plan.py` compares the leakage scores of FORTIFY with those of PLAN. It takes the following arguments as input:
 
 - `<design>` : name of the design being evaluated
 - `<plan_leaks_path>`: path to the file containing the PLAN leakage scores for the given design
