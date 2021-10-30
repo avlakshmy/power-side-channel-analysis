@@ -33,6 +33,8 @@ The main script for PLAN is `run_plan.py`:
   - we must create a Bash script for performing behavioral simulations (the script would be different for each input design, because the number of inputs, their names and range of values taken by them would be different in each case; please refer to `fa2_simulate.sh` corresponding to the 2-bit Full Adder design (`../verilog_files/fa2.v`) for reference)
   - the first few lines of the `run_plan.py` script, containing the functions to load input data and compute the oracle, must be modified
 
+The script `run_plan.py` as well as the simulation scripts have been reused (with modifications) from the [PLAN/PARAM project](https://doi.org/10.1109/HOST45689.2020.9300263).
+
 **Steps to run PLAN:**
 
 The first step is to choose the input Verilog design to be analyzed, as well as the signal to be used as the oracle in the chosen design. Correspondingly, we need to create a Bash script for performing the behavioral simulation, where we must specify the correct input Verilog file name, and also ensure that it has the correct line numbers, variable names, max range (depending on the number of bits in each input) to generate random values. We must also modify the first few lines of the `run_plan.py` script containing functions for loading the input values and computing the oracle. The corresponding functions for the sample Verilog files have been provided in the `examples.py` file. Then, we can run this script.
@@ -49,3 +51,68 @@ The `run_plan.py` script takes the following input parameters:
 For example, let's take the case of a 2-bit Full Adder design (`../verilog_files/fa2.v`), which uses a secret key `FullAdder.k` of value 2. Suppose we use the `FullAdder.enca` signal in this design to be our oracle signal. Let us say the name of the design is `fa2`. We have the script `fa2_simulate.sh` to perform the behavioral simulations on this design. Also, we have added the required functions at the beginning of the `run_plan.py` script to load the input values and compute the oracle. Suppose we want to store the results in a directory called `trial/` within the `results/` directory. Then, the corresponding command to run PLAN would be:
 
 `python3 run_plan.py ../verilog_files/fa2.v 2 fa2_simulate.sh fa2 -n 1000 -r trial`
+
+**Secret key values and simulation scripts for different sample Verilog files**
+
+| Input File | Key Value | Simulation Script |
+| :----- | :- | :---- |
+| `fa2.v` | 2 | `fa2_simulate.sh` |
+| `fa4.v` | 10 | `fa4_simulate.sh` |
+| `fa8.v` | 170 | `fa8_simulate.sh` |
+| `c17.v` | 1 | `c17_simulate.sh` |
+| `c432.v` | 1 | `c432_simulate.sh` |
+| `present*.v` | 170102 | `present*_simulate.sh` |
+
+**Functions to be modified in `run_plan.py` as per the design being analyzed**
+
+**Designs:** `fa2.v`, `fa4.v`, `fa8.v`, `c14.v`, `c432.v`
+
+```python
+# To read the input values generated during simulation
+def loadData():
+   a = []
+   with open('txtfile', 'r') as f:
+       buff = f.read().split('\n')
+   for d in buff[:-1]:
+       a.append(d)
+   return np.array(a,dtype='int')
+
+# To compute the oracle trace from the input trace generated and the secret key used during simulation
+def computeOracle(k):
+    ip1 = loadData()
+    y = np.bitwise_xor(ip1, k)
+    return y
+```
+
+**Designs:** `present*.v`
+
+```python
+# To read the input values generated during simulation
+def loadData():
+    a = []
+    with open('txtfile', 'r') as f:
+        buff = f.read().split('\n')
+    for d in buff[:-1]:
+        # Since the simulation stores each byte of the 64-bit input separately,
+        # we need to first combine them into a complete 64-bit value
+        byteVals = [bin(int(val))[2:].zfill(8) for val in d.split(' ')][::-1]
+        x = "".join(byteVals)
+        a.append(x)
+    return np.array(a)
+
+# To compute the oracle trace from the input trace generated and the secret key used during simulation
+def myXor(x, w, n):
+    ans = ''.join([str(int(x[i] != w[i])) for i in range(n)])
+    return ans
+
+def computeOracle(k):
+    ip1 = loadData()
+    n = 64 # input size is 64 bits
+
+    # converting the 80-bit secret key to binary representation
+    # and extracting its first 64 bits for the PRESENT keyxor operation
+    keyVal = bin(k)[2:].zfill(80)[:-16]
+
+    y = [int(myXor(keyVal, inp.zfill(n), n),2) for inp in ip1]
+    return y
+```

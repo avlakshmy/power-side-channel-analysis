@@ -29,6 +29,8 @@ do
 	sed -i "$line1 s/.*/  	a=$r1;/" $inpfile
 	sed -i "$line2 s/.*/  	b=$r2;/" $inpfile
 	sed -i "$line3 s/.*/  	c=$r3;/" $inpfile
+
+	# plugging in the dumpfile name in the Verilog file
 	sed -i "$lineD s/.*/  	\$\dumpfile\(\\\"\ $i.vcd\")\;/" $inpfile
 
 	# running the behavioral simulation

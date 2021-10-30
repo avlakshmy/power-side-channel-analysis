@@ -125,6 +125,8 @@ do
 	sed -i "$line33 s/.*/  	N105=$r33;/" $inpfile
 	sed -i "$line34 s/.*/  	N108=$r34;/" $inpfile
 	sed -i "$line35 s/.*/  	N112=$r35;/" $inpfile
+
+	# plugging in the dumpfile name in the Verilog file
 	sed -i "$lineD s/.*/  	\$\dumpfile\(\\\"\ $i.vcd\")\;/" $inpfile
 
 	# running the behavioral simulation
