@@ -37,7 +37,7 @@ The script `run_plan.py` as well as the simulation scripts have been reused (wit
 
 **Steps to run PLAN:**
 
-The first step is to choose the input Verilog design to be analyzed, as well as the signal to be used as the oracle in the chosen design. Correspondingly, we need to create a Bash script for performing the behavioral simulation, where we must specify the correct input Verilog file name, and also ensure that it has the correct line numbers, variable names, max range (depending on the number of bits in each input) to generate random values. We must also modify the first few lines of the `run_plan.py` script containing functions for loading the input values and computing the oracle. The corresponding functions for the sample Verilog files have been provided in the `examples.py` file. Then, we can run this script.
+The first step is to choose the input Verilog design to be analyzed, as well as the signal to be used as the oracle in the chosen design. Correspondingly, we need to create a Bash script for performing the behavioral simulation, where we must specify the correct input Verilog file name, and also ensure that it has the correct line numbers, variable names, max range (depending on the number of bits in each input) to generate random values. We must also modify the first few lines of the `run_plan.py` script containing functions for loading the input values and computing the oracle. The corresponding functions for the different sample Verilog files have been provided in a later section below. Then, we can run this script.
 
 The `run_plan.py` script takes the following input parameters:
 
@@ -52,15 +52,15 @@ For example, let's take the case of a 2-bit Full Adder design (`../verilog_files
 
 `python3 run_plan.py ../verilog_files/fa2.v 2 fa2_simulate.sh fa2 -n 1000 -r trial`
 
-**Secret key values and simulation scripts for different sample Verilog files**
+**Input parameter values for different sample Verilog files**
 
 | Input File | Key Value | Simulation Script |
 | :----- | :- | :---- |
+| `c17.v` | 1 | `c17_simulate.sh` |
+| `c432.v` | 1 | `c432_simulate.sh` |
 | `fa2.v` | 2 | `fa2_simulate.sh` |
 | `fa4.v` | 10 | `fa4_simulate.sh` |
 | `fa8.v` | 170 | `fa8_simulate.sh` |
-| `c17.v` | 1 | `c17_simulate.sh` |
-| `c432.v` | 1 | `c432_simulate.sh` |
 | `present*.v` | 170102 | `present*_simulate.sh` |
 
 **Functions to be modified in `run_plan.py` as per the design being analyzed**

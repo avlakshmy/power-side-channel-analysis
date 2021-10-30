@@ -38,7 +38,7 @@ _FORTIFY: Analytical Pre-Silicon Side-Channel Leakage Characterization of Digita
 
 The above steps need to be performed once initially. However, the last step has to be run, i.e., the environment must be activated each time before running any of the tools.
 
-Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more detailed description of PLAN and FORTIFY, as well as instructions to run the scripts for both tools.
+Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more detailed description of PLAN and FORTIFY, as well as instructions to run the scripts for both tools for different sample designs.
 
 ## Directory Structure of Repo
 
@@ -57,21 +57,21 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `sig_prob.py` : Python script containing functions to recursively calculate the signal probability and conditional signal probabilities of a signal in the design
   - `utils.py` : Python script containing utility functions used during Verilog parsing
 - `plan/` : Code files for PLAN
-  - `c17_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/c17.v`) corresponding to `c17` design
-  - `c432_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/c432.v`) corresponding to `c432` design
+  - `c17_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/c17.v`)
+  - `c432_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/c432.v`)
   - `clean.sh` : Bash script to clean up temporary files generated during previous simulations
-  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`) corresponding to 2-bit Full Adder design
-  - `fa4_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa4.v`) corresponding to 4-bit Full Adder design
-  - `fa8_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa8.v`) corresponding to 8-bit Full Adder design
+  - `fa2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa2.v`)
+  - `fa4_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa4.v`)
+  - `fa8_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/fa8.v`)
   - `PLAN.md` : Documentation about PLAN
-  - `present_dec_1_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_dec_1.v`) corresponding to PRESENT decryption (1 round) design
-  - `present_dec_2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_dec_2.v`) corresponding to PRESENT decryption (2 rounds) design
-  - `present_enc_1_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_enc_1.v`) corresponding to PRESENT encryption (1 round) design
-  - `present_enc_2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_enc_2.v`) corresponding to PRESENT encryption (2 rounds) design
+  - `present_dec_1_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_dec_1.v`)
+  - `present_dec_2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_dec_2.v`)
+  - `present_enc_1_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_enc_1.v`)
+  - `present_enc_2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_enc_2.v`)
   - `run_plan.py` : Main script to run PLAN
 - `verilog_files/` : Directory to store Verilog files corresponding to designs to be analyzed using the tools
-  - `c17.v` : Sample Verilog file corresponding to c17 combinational circuit design
-  - `c432.v` : Sample Verilog file corresponding to c432 combinational circuit design
+  - `c17.v` : Sample Verilog file corresponding to [c17 ISCAS-85 benchmark combinational design](http://www.pld.ttu.ee/~maksim/benchmarks/iscas85/verilog/)
+  - `c432.v` : Sample Verilog file corresponding to [c432 ISCAS-85 benchmark combinational design](http://www.pld.ttu.ee/~maksim/benchmarks/iscas85/verilog/)
   - `fa2.v` : Sample Verilog file corresponding to 2-bit full adder design
   - `fa4.v` : Sample Verilog file corresponding to 4-bit full adder design
   - `fa8.v` : Sample Verilog file corresponding to 8-bit full adder design

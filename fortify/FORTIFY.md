@@ -50,11 +50,11 @@ For example, let's take the case of a 2-bit Full Adder design (`../verilog_files
 
 | Input File | Top Module | Ref Module | Ref Instance | Ref Signal | Ref Signal Width |
 | :- | :- | :- | :- | :- | :- |
+| `c17.v` | `c17` | `c17` | `c17` | `c17.N2` | 1 |
+| `c432.v` | `c432` | `c432` | `c432` | `c432.N1` | 1 |
 | `fa2.v` | `FullAdder` | `FullAdder` | `FullAdder` | `FullAdder.enca` | 2 |
 | `fa4.v` | `FullAdder` | `FullAdder` | `FullAdder` | `FullAdder.enca` | 4 |
 | `fa8.v` | `FullAdder` | `FullAdder` | `FullAdder` | `FullAdder.enca` | 8 |
-| `c17.v` | `c17` | `c17` | `c17` | `c17.N2` | 1 |
-| `c432.v` | `c432` | `c432` | `c432` | `c432.N1` | 1 |
 | `present-enc-1.v` | `Present` | `Encrypt` | `Present.enc` | `Present.enc.dat1_1` | 64 |
 | `present-dec-1.v` | `Present` | `Decrypt` | `Present.dec` | `Present.dec.dat1_1` | 64 |
 | `present-enc-2.v` | `Present` | `Encrypt` | `Present.enc` | `Present.enc.dat1_1` | 64 |

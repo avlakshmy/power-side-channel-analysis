@@ -19,7 +19,7 @@ from Verilog_VCD import Verilog_VCD as v
 
 ################################################################################
 # Functions to be modified by user as per the design being analysed.
-# Please refer to examples.py for the corresponding functions for other designs.
+# Please refer to PLAN.md for the corresponding functions for different designs.
 ################################################################################
 
 # To read the input values generated during simulation
@@ -307,8 +307,8 @@ if __name__ == '__main__':
 
     print("Note: Please check that:")
     print("1. the simulation script ({}) given as argument has the correct line numbers, variable names, max range to generate random values".format(simulation_script))
-    print("2. the secret key ({}) given as argument is same as that in the input Verilog file ({}) - refer to examples.py for guidance".format(key_value, input_file_path))
-    print("3. this script (run_plan.py) has the correct functions to load data and compute oracle (in the first few lines) - refer to examples.py for guidance")
+    print("2. the secret key ({}) given as argument is same as that in the input Verilog file ({}) - please refer to PLAN.md for guidance".format(key_value, input_file_path))
+    print("3. this script (run_plan.py) has the correct functions to load data and compute oracle (in the first few lines) - please refer to PLAN.md for guidance")
     print()
     print("If you are sure that the above details are correct, and wish to continue, press Y/y (and enter)")
     print("To stop, press any other key (and enter)")
