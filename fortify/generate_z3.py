@@ -1,4 +1,7 @@
 # This file has been taken from the earlier SOLOMON project, and modified for this project.
+# This file contains the functions necessary to parse a Verilog module AST, given its input
+# and output port list and width maps, and obtain the module wire expressions, module width
+# maps and topological sort of the AST nodes.
 
 import copy
 import z3
@@ -275,6 +278,7 @@ def getFunctionMaps(funcAst, moduleAst, functionNameExprMap, functionNameInputWi
     functionNameInputWidthMap[funcAst.name] = nameWidthMap
     functionNameInputListMap[funcAst.name] = inputNameList
 
+# recursively get all the identifiers involved in an ast
 def getIdentifiers(ast):
     if isinstance(ast, vast.Identifier):
         return [ast.name]
@@ -317,6 +321,7 @@ def getIdentifiers(ast):
         print('Warning: Not handling', type(ast), 'file: generate_z3.py', 'line no.:', utils.getLineNumber())
         return []
 
+# add assignment statements to ast
 def updateAssignGraph(assignGraph, ast):
     lhsAst = ast.left.var
     rhsAst = ast.right.var
@@ -358,6 +363,7 @@ def updateAssignGraph(assignGraph, ast):
             rhsNode.addOutgoingEdge(lhsNode.id, ast)
             lhsNode.addIncomingEdge(rhsNode.id, ast)
 
+# replace the variable names in an expression with corresponding arg names
 def replaceIdentifiers(expr, inputs, args):
     if expr == 0:
         return z3.BitVecVal(0, expr.size())
@@ -369,97 +375,7 @@ def replaceIdentifiers(expr, inputs, args):
 
     return z3.substitute(expr, substitutionList)
 
-def resolveAllIdentifiers(ast, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap):
-    if isinstance(ast, vast.FunctionCall):
-        functionName = ast.name.name
-        assert(functionName in functionNameExprMap)
-        functionExpr = functionNameExprMap[functionName]
-
-        newFunctionExpr = copy.deepcopy(functionExpr)
-
-        inputs = functionNameInputListMap[functionName]
-        args = [resolveAllIdentifiers(argAst, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap) for argAst in ast.args]
-
-        assert(len(args) == len(inputs))
-
-        inputs = [z3.BitVec(name, functionNameInputWidthMap[functionName][name]) for name in inputs]
-
-        newFunctionExpr = replaceIdentifiers(newFunctionExpr, inputs, args)
-        return z3.simplify(newFunctionExpr)
-
-    elif isinstance(ast, vast.Identifier):
-        return nameExprMap[ast.name]
-
-    elif isinstance(ast, vast.Partselect):
-        assert(isinstance(ast.lsb, vast.IntConst))
-        assert(isinstance(ast.msb, vast.IntConst))
-
-        varExpr = resolveAllIdentifiers(ast.var, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        lsb = utils.verilogIntConstToInt(ast.lsb)
-        msb = utils.verilogIntConstToInt(ast.msb)
-
-        return z3.simplify(z3.Extract(msb, lsb, varExpr))
-
-    elif isinstance(ast, vast.Pointer):
-        assert(isinstance(ast.ptr, vast.IntConst))
-
-        varExpr = resolveAllIdentifiers(ast.var, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        ptr = utils.verilogIntConstToInt(ast.ptr)
-
-        return z3.simplify(z3.Extract(ptr, ptr, varExpr))
-
-    elif isinstance(ast, vast.Concat):
-        return z3.simplify(z3.Concat([resolveAllIdentifiers(item, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap) for item in ast.list]))
-
-    elif isinstance(ast, vast.Or) or isinstance(ast, vast.And) or isinstance(ast, vast.Xor) or isinstance(ast, vast.Eq) or isinstance(ast, vast.NotEq):
-        leftExpr = resolveAllIdentifiers(ast.left, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        rightExpr = resolveAllIdentifiers(ast.right, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-
-        leftExpr, rightExpr = matchExprWidths(leftExpr, rightExpr)
-
-        if isinstance(ast, vast.Xor):
-            return z3.simplify(leftExpr ^ rightExpr)
-        elif isinstance(ast, vast.Or):
-            return z3.simplify(leftExpr | rightExpr)
-        elif isinstance(ast, vast.And):
-            return z3.simplify(leftExpr & rightExpr)
-        elif isinstance(ast, vast.Eq):
-            return z3.simplify(leftExpr == rightExpr)
-        else: # if isinstance(ast, vast.NotEq):
-            return z3.simplify(leftExpr != rightExpr)
-
-    elif isinstance(ast, vast.Unot):
-        rightExpr = resolveAllIdentifiers(ast.right, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        return z3.simplify(~rightExpr)
-
-    elif isinstance(ast, vast.IntConst):
-        width = 32
-        if "'" in ast.value:
-            idx = ast.value.index("'")
-            assert(ast.value[:idx].isdigit())
-            width = int(ast.value[:idx])
-
-        return z3.BitVecVal(utils.verilogIntConstToInt(ast), width)
-
-    elif isinstance(ast, vast.Sll):
-        leftExpr = resolveAllIdentifiers(ast.left, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        rightExpr = resolveAllIdentifiers(ast.right, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-
-        leftExpr, rightExpr = matchExprWidths(leftExpr, rightExpr)
-        return z3.simplify(leftExpr << rightExpr)
-
-    elif isinstance(ast, vast.Cond):
-        condExpr = resolveAllIdentifiers(ast.cond, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        trueExpr = resolveAllIdentifiers(ast.true_value, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-        falseExpr = resolveAllIdentifiers(ast.false_value, nameExprMap, nameWidthMap, functionNameExprMap, functionNameInputWidthMap, functionNameInputListMap)
-
-        trueExpr, falseExpr = matchExprWidths(trueExpr, falseExpr)
-
-        return z3.simplify(z3.If(condExpr, trueExpr, falseExpr))
-
-    else:
-        print('Warning: Not handling', type(ast), 'file: generate_z3.py', 'line no.:', utils.getLineNumber())
-
+# add instance related assignments (input/output ports/args) to ast
 def updateAssignGraphWithInstAst(assignGraph, instAst, moduleInputPortListMap, moduleOutputPortListMap):
     instInputList = moduleInputPortListMap[instAst.module]
     instOutputList = moduleOutputPortListMap[instAst.module]
@@ -482,7 +398,6 @@ def updateAssignGraphWithInstAst(assignGraph, instAst, moduleInputPortListMap, m
     for ast in rhsAsts:
         rhsIdentifiers.extend(getIdentifiers(ast))
 
-    # TODO: this code is repeated in `getIdentifiers()`
     lhsIdentifiers = list(set(lhsIdentifiers))
     rhsIdentifiers = list(set(rhsIdentifiers))
 
@@ -501,6 +416,7 @@ def updateAssignGraphWithInstAst(assignGraph, instAst, moduleInputPortListMap, m
             rhsNode.addOutgoingEdge(lhsNode.id, instAst)
             lhsNode.addIncomingEdge(rhsNode.id, instAst)
 
+# compute the module wire expressions, width maps and topological sort of the nodes in the module ast
 def generateModuleMaps(moduleAst, moduleInputPortListMap, moduleOutputPortListMap, moduleInputPortWidthListMap, moduleOutputPortWidthListMap, moduleWireExprMap):
     assert(isinstance(moduleAst, vast.ModuleDef))
 
@@ -519,6 +435,7 @@ def generateModuleMaps(moduleAst, moduleInputPortListMap, moduleOutputPortListMa
     # map to track assign/instance ASTs which have been processed
     astProcessed = {}
 
+    # process the asts in the module ast to get the declarations and function maps
     for ast in moduleAst.items:
         if isinstance(ast, vast.Decl):
             for varAst in ast.list:
@@ -549,7 +466,7 @@ def generateModuleMaps(moduleAst, moduleInputPortListMap, moduleOutputPortListMa
         else:
             print('Warning: Not handling', type(ast), 'file: generate_z3.py', 'line no.:', utils.getLineNumber())
 
-    # populate assignGraph with assign statements and module instantiations
+    # populate graph with assign statements and module instantiations
     for ast in moduleAst.items:
         if isinstance(ast, vast.Assign):
             updateAssignGraph(assignGraph, ast)

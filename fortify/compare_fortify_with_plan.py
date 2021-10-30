@@ -14,7 +14,7 @@ def main(plan_leaks_path, fortify_leaks_path, results_path):
     plan_df = pd.read_csv(plan_leaks_path)
     fortify_df = pd.read_csv(fortify_leaks_path)
 
-    # PLAN signal names preprocessing
+    # PLAN signal names preprocessing - for comparison with FORTIFY signal names
     plan_df['Signal'] = [x.split('[')[0] for x in list(plan_df['Signal'])]
 
     plan_df = plan_df.sort_values(by=["Signal"])

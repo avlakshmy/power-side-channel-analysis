@@ -51,8 +51,6 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `generate_z3.py` : Python script containing functions for generating logical expressions corresponding to each signal in the design
   - `graph.py` : Python script defining a graph class
   - `module_maps.py` : Python script containing functions to convert the input design into a directed graph representation and extract the sub-circuit influenced by the reference signal
-  - `parser.out` :
-  - `parsetab.py` :
   - `run_fortify.py` : Main script to run FORTIFY
   - `sig_prob.py` : Python script containing functions to recursively calculate the signal probability and conditional signal probabilities of a signal in the design
   - `utils.py` : Python script containing utility functions used during Verilog parsing
@@ -70,15 +68,16 @@ Please refer to the `plan/PLAN.md` and `fortify/FORTIFY.md` files for a more det
   - `present_enc_2_simulate.sh` : Bash script to perform behavioral simulations of the Verilog file (`../verilog_files/present_enc_2.v`)
   - `run_plan.py` : Main script to run PLAN
 - `verilog_files/` : Directory to store Verilog files corresponding to designs to be analyzed using the tools
-  - `c17.v` : Sample Verilog file corresponding to [c17 ISCAS-85 benchmark combinational design](http://www.pld.ttu.ee/~maksim/benchmarks/iscas85/verilog/)
-  - `c432.v` : Sample Verilog file corresponding to [c432 ISCAS-85 benchmark combinational design](http://www.pld.ttu.ee/~maksim/benchmarks/iscas85/verilog/)
-  - `fa2.v` : Sample Verilog file corresponding to 2-bit full adder design
-  - `fa4.v` : Sample Verilog file corresponding to 4-bit full adder design
-  - `fa8.v` : Sample Verilog file corresponding to 8-bit full adder design
-  - `present_dec_1.v` : Sample Verilog file corresponding to PRESENT decryption (1 round) design
-  - `present_dec_2.v` : Sample Verilog file corresponding to PRESENT decryption (2 rounds) design
-  - `present_enc_1.v` : Sample Verilog file corresponding to PRESENT encryption (1 round) design
-  - `present_enc_2.v` : Sample Verilog file corresponding to PRESENT encryption (2 rounds) design
+  - `c17.v` : Verilog file corresponding to [c17 ISCAS-85 benchmark combinational design](http://www.pld.ttu.ee/~maksim/benchmarks/iscas85/verilog/)
+  - `c432.v` : Verilog file corresponding to [c432 ISCAS-85 benchmark combinational design](http://www.pld.ttu.ee/~maksim/benchmarks/iscas85/verilog/)
+  - `fa2.v` : Verilog file corresponding to 2-bit full adder design
+  - `fa4.v` : Verilog file corresponding to 4-bit full adder design
+  - `fa8.v` : Verilog file corresponding to 8-bit full adder design
+  - `p2psoc.v` : Verilog file corresponding to [P2P-SoC design](https://github.com/apdn/P2PSoC)
+  - `present_dec_1.v` : Verilog file corresponding to PRESENT decryption (1 round) design
+  - `present_dec_2.v` : Verilog file corresponding to PRESENT decryption (2 rounds) design
+  - `present_enc_1.v` : Verilog file corresponding to PRESENT encryption (1 round) design
+  - `present_enc_2.v` : Verilog file corresponding to PRESENT encryption (2 rounds) design
 - `environment.yml` : Conda environment file
 - `LICENSE.iitm` : License for the tools
 - `README.md` : High-level overview of the tools

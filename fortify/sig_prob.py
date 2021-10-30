@@ -50,6 +50,9 @@ def populateSigProbs(sig, encounteredSigs, s_hat, s_hat_0, s_hat_1, truthTableMa
                 s_hat_0[sig][ref] = s_hat_0[exp][ref]
                 s_hat_1[sig][ref] = s_hat_1[exp][ref]
 
+        # for expressions corresponding to a logical operation (gate) like Not, And, Or, Xor,
+        # we calculate the signal probability recursively from the signal probabilities
+        # of the inputs of the operation (gate)
         elif isinstance(exp, list):
             op = exp[0]
             if op == "Not":

@@ -58,7 +58,6 @@ def createClkList(clkList, sname, tv):
             clkList[x[0]][0].append(sname)
             clkList[x[0]][1].append(x[1])
         else:
-            # clkList[x[0]].append((sname,x[1]))
             clkList[x[0]][0].append(sname)
             clkList[x[0]][1].append(x[1])
     return clkList
@@ -179,7 +178,7 @@ def computeAndSaveLeakageScores(leaks_file_path, num_iterations, key_value):
         leaks[sig] = temp
         counter += 1
 
-    for m in leaks: # calc max leak in each signal
+    for m in leaks: # calculate max leakage in each signal
         mx[m] = max(leaks[m])
 
     leaks_x = []
@@ -211,7 +210,7 @@ def main(input_file_path, simulation_script, num_iterations, key_value, leaks_fi
     rfiles.sort(key = alphaNumOrder)
     initSigArray(rfiles)
     debug = 0  # flag for debugging
-    init(num_iterations) # Mandatory intialisations
+    init(num_iterations) # mandatory intialisations
     signals = [x for x in sigGroup] # signals present
     for x in signals:
         sigMatrix[x] = []

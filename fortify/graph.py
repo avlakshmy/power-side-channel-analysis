@@ -1,4 +1,5 @@
 # This file has been taken from the earlier SOLOMON project, and modified for this project.
+# This file defines the classes for an ast node and the ast itself (directed graph formed from the ast nodes)
 
 class GraphNode:
 	globalNodeId = 0

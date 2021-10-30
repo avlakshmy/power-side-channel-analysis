@@ -1,4 +1,6 @@
 # This file has been taken from the earlier SOLOMON project, and modified for this project.
+# This file contains the functions to parse a Verilogfile, and populate various mappings
+# with the details of the module under consideration.
 
 import time
 import copy
@@ -50,7 +52,7 @@ def populateModuleAstMap(file_path):
 
     print("Parsing completed in {:.4f}s".format(b - a))
 
-# create maps between modules and their inputs, outputs, wires
+# creates mappings between modules and their input ports & widths, output ports & widths, wires
 def populateModuleInputOutputPortListMap(moduleAst):
     module_name = moduleAst.name
 
@@ -79,6 +81,7 @@ def populateModuleInputOutputPortListMap(moduleAst):
                     moduleWireListMap[module_name].append(varAst.name)
                     moduleWireWidthListMap[module_name].append(width)
 
+# recursively gets the list of all instances within an ast
 def getInstListFromAst(ast):
     inst_list = []
     if isinstance(ast, vast.Instance):
