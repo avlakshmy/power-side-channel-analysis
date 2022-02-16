@@ -65,7 +65,7 @@ For example, let's take the case of a 2-bit Full Adder design (`../verilog_files
 | `present-enc-1.v` | `Present` | `Encrypt` | `Present.enc` | `Present.enc.dat1_1` | 64 |
 | `present-dec-1.v` | `Present` | `Decrypt` | `Present.dec` | `Present.dec.dat1_1` | 64 |
 | `present-enc-2.v` | `Present` | `Encrypt` | `Present.enc` | `Present.enc.dat1_1` | 64 |
-| `present-dec-1.v` | `Present` | `Decrypt` | `Present.dec` | `Present.dec.dat1_1` | 64 |
+| `present-dec-2.v` | `Present` | `Decrypt` | `Present.dec` | `Present.dec.dat1_1` | 64 |
 
 
 **Steps to compare results of FORTIFY and PLAN**
